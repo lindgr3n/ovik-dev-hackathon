@@ -28,14 +28,14 @@
 
 	onMount(() => {
 		Fathom.load('KDNOUWNY', {
-			includedDomains: ['ovik-dev-conf.netlify.app'],
+			includedDomains: ['ovik-dev-hackathon.netlify.app'],
 			excludedDomains: ['localhost']
 		});
 	});
 	$: {
 		// Track page view when path changes.
 		$page.url.pathname,
-			$page.url.host === 'ovik-dev-conf.netlify.app' && browser && Fathom.trackPageview();
+			$page.url.host === 'ovik-dev-hackathon.netlify.app' && browser && Fathom.trackPageview();
 	}
 </script>
 
