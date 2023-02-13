@@ -3,6 +3,10 @@
 
 	import { MenuIcon, XIcon } from '@rgossiaux/svelte-heroicons/outline';
 	import { fade } from 'svelte/transition';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import { browser } from '$app/environment';
+	import * as Fathom from 'fathom-client';
 
 	let showMenu = false;
 
@@ -21,6 +25,18 @@
 			href: '/sponsors'
 		}
 	];
+
+	onMount(() => {
+		Fathom.load('KDNOUWNY', {
+			includedDomains: ['ovik-dev-conf.netlify.app'],
+			excludedDomains: ['localhost']
+		});
+	});
+	$: {
+		// Track page view when path changes.
+		$page.url.pathname,
+			$page.url.host === 'ovik-dev-conf.netlify.app' && browser && Fathom.trackPageview();
+	}
 </script>
 
 <div class="bg-white">
