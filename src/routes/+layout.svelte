@@ -56,13 +56,6 @@
 								>
 							</a>
 							<div class="flex justify-end">
-								{#if $page.url.pathname != '/signup'}
-									<a
-										href="/signup"
-										class="block w-full px-6 text-center rounded-md bg-gradient-to-r from-teal-500 to-cyan-600 py-3 font-medium text-white shadow hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900"
-										>Signup</a
-									>
-								{/if}
 								<div class="-mr-2 flex items-center md:hidden">
 									<button
 										type="button"
@@ -77,13 +70,20 @@
 								</div>
 							</div>
 						</div>
-						<div class="hidden space-x-8 md:ml-10 md:flex">
+						<div class="hidden space-x-8 pr-8 md:ml-10 md:flex">
 							{#each menu as item}
-								<!-- TODO: ACTIVATE <a href={item.href} class="text-base font-medium text-white hover:text-gray-300"
+								<a href={item.href} class="text-base font-medium text-white hover:text-gray-300"
 									>{item.name}</a
-								> -->
+								>
 							{/each}
 						</div>
+						{#if $page.url.pathname != '/signup'}
+							<a
+								href="/signup"
+								class="hidden md:block px-6 text-center rounded-md bg-gradient-to-r from-teal-500 to-cyan-600 py-3 font-medium text-white shadow hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+								>Signup</a
+							>
+						{/if}
 					</div>
 				</nav>
 			</div>
@@ -100,13 +100,13 @@
         -->
 			{#if showMenu}
 				<div
-					class="absolute inset-x-0 top-0 origin-top transform p-2 transition md:hidden"
+					class="absolute inset-x-0 top-0 origin-top transform p-2 transition md:hidden z-10"
 					transition:fade={{ delay: 250, duration: 300 }}
 				>
 					<div
 						class="overflow-hidden rounded-lg bg-white shadow-md ring-1 ring-black ring-opacity-5"
 					>
-						<div class="flex items-center justify-between px-5 pt-4">
+						<div class="flex items-center justify-between px-5 py-4 bg-black">
 							<a class="flex items-center" href="/">
 								<img class="h-8 w-auto sm:h-10 pr-4" src="/ovikdevloggo.png" alt="" />
 								<span class="text-base font-medium text-white hover:text-gray-300"
@@ -125,16 +125,24 @@
 								</button>
 							</div>
 						</div>
-						<div class="pt-5 pb-6">
-							<div class="space-y-1 px-2">
+						<div class="p-5 pb-6">
+							<div class="space-y-1 px-2 pb-4">
 								{#each menu as item}
 									<a
 										href={item.href}
 										class="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50"
-										>{item.name}</a
+										on:click={() => (showMenu = false)}>{item.name}</a
 									>
 								{/each}
 							</div>
+							<hr class="sm:border-t sm:border-gray-200 pb-4" />
+							{#if $page.url.pathname != '/signup'}
+								<a
+									href="/signup"
+									class="block w-full px-6 text-center rounded-md bg-gradient-to-r from-teal-500 to-cyan-600 py-3 font-medium text-white shadow hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+									on:click={() => (showMenu = false)}>Signup</a
+								>
+							{/if}
 						</div>
 					</div>
 				</div>
