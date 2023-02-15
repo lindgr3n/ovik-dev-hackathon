@@ -48,24 +48,33 @@
 					aria-label="Global"
 				>
 					<div class="flex flex-1 items-center">
-						<div class="flex w-full items-center justify-between md:w-auto">
+						<div class="flex w-full items-center justify-between">
 							<a class="flex items-center" href="/">
 								<img class="h-8 w-auto sm:h-10 pr-4" src="/ovikdevloggo.png" alt="" />
 								<span class="text-base font-medium text-white hover:text-gray-300"
 									>Ovik.dev - hackathon</span
 								>
 							</a>
-							<div class="-mr-2 flex items-center md:hidden">
-								<button
-									type="button"
-									class="focus-ring-inset inline-flex items-center justify-center rounded-md bg-gray-900 p-2 text-gray-400 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
-									aria-expanded="false"
-									on:click={() => (showMenu = true)}
-									on:keydown={() => (showMenu = true)}
-								>
-									<span class="sr-only">Open main menu</span>
-									<MenuIcon class="h-6 w-6" />
-								</button>
+							<div class="flex justify-end">
+								{#if $page.url.pathname != '/signup'}
+									<a
+										href="/signup"
+										class="block w-full px-6 text-center rounded-md bg-gradient-to-r from-teal-500 to-cyan-600 py-3 px-2 font-medium text-white shadow hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900"
+										>Signup</a
+									>
+								{/if}
+								<div class="-mr-2 flex items-center md:hidden">
+									<button
+										type="button"
+										class="focus-ring-inset inline-flex items-center justify-center rounded-md bg-gray-900 p-2 text-gray-400 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-white"
+										aria-expanded="false"
+										on:click={() => (showMenu = true)}
+										on:keydown={() => (showMenu = true)}
+									>
+										<span class="sr-only">Open main menu</span>
+										<MenuIcon class="h-6 w-6" />
+									</button>
+								</div>
 							</div>
 						</div>
 						<div class="hidden space-x-8 md:ml-10 md:flex">
