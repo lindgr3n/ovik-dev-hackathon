@@ -6,6 +6,7 @@
 		UsersIcon,
 		MusicNoteIcon
 	} from '@rgossiaux/svelte-heroicons/outline';
+	import { fade } from 'svelte/transition';
 
 	const manifesto = [
 		{
@@ -79,8 +80,11 @@
 		if (futureWordIndex > futureWords.length - 1) {
 			futureWordIndex = 0;
 		}
-		futureWord = futureWords[futureWordIndex++];
-	}, 3000);
+		futureWord = '';
+		setTimeout(() => {
+			futureWord = futureWords[futureWordIndex++];
+		}, 800);
+	}, 5500);
 </script>
 
 <main>
@@ -95,11 +99,17 @@
 							class="mt-4 text-3xl font-bold tracking-tight text-white sm:mt-5 sm:text-6xl lg:mt-6 xl:text-6xl"
 						>
 							<span class="block">Finding ways to</span>
-							<span
+
+							<div
 								style="height: 130px"
 								class="block bg-gradient-to-r from-teal-200 to-cyan-400 bg-clip-text pb-3 text-transparent sm:pb-5"
-								>{futureWord}</span
 							>
+								{#key futureWord}
+									<div transition:fade={{ delay: 200, duration: 300 }}>
+										{futureWord}
+									</div>
+								{/key}
+							</div>
 						</h1>
 						<p class="text-base text-gray-300 sm:text-xl lg:text-lg xl:text-xl">
 							Join the Ovik.dev <span
@@ -110,14 +120,15 @@
 							and tackle some of our daily challenges by creating innovative solutions.
 						</p>
 						<div class="mt-10 sm:mt-12">
-							<form action="#" class="sm:mx-auto sm:max-w-xl lg:mx-0">
+							<form method="post" class="sm:mx-auto sm:max-w-xl lg:mx-0">
 								<div class="sm:flex">
 									<div class="min-w-0 flex-1">
 										<label for="email" class="sr-only">Email address</label>
 										<input
 											id="email"
+											name="email"
 											type="email"
-											placeholder="Enter your email to get information on how to join"
+											placeholder="Register to get more information"
 											class="block w-full rounded-md border-0 px-4 py-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900"
 										/>
 									</div>
@@ -125,13 +136,12 @@
 										<button
 											type="submit"
 											class="block w-full rounded-md bg-gradient-to-r from-teal-500 to-cyan-600 py-3 px-4 font-medium text-white shadow hover:from-teal-600 hover:to-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900"
-											>Signup</button
+											>Keep me updated</button
 										>
 									</div>
 								</div>
-								<p class="mt-3 text-sm text-gray-300 sm:mt-4">
-									By signing up you will only recive more information about this and future events.
-									You will get an email on how you can join the event.
+								<p class="mt-3 italic text-sm text-gray-300">
+									You will only recive information about this and future events.
 								</p>
 							</form>
 						</div>
