@@ -1,4 +1,4 @@
-import { error, fail, redirect } from '@sveltejs/kit';
+import { redirect } from '@sveltejs/kit';
 import type { PageServerLoad, Actions } from './$types';
 
 export const load: PageServerLoad = async function ({ locals }) {
@@ -35,7 +35,7 @@ export const load: PageServerLoad = async function ({ locals }) {
 };
 
 export const actions: Actions = {
-	default: async (event) => {
+	default: async () => {
 		// TODO: Update the user information
 		return {};
 	}

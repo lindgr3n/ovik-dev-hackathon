@@ -16,6 +16,7 @@ export interface UserDataInput {
 	role?: UserRole;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isUserRole(role: any): role is UserRole {
 	return Object.values(UserRole).includes(role);
 }
