@@ -88,7 +88,7 @@
 </script>
 
 <main>
-	<section class="bg-gray-900 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-8 lg:pb-14">
+	<section class="bg-gray-900 px-4 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-8 lg:pb-14">
 		<div class="mx-auto max-w-7xl lg:px-8">
 			<div class="lg:grid lg:grid-cols-3 lg:gap-8">
 				<div
