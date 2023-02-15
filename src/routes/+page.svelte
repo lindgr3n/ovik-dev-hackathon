@@ -128,7 +128,7 @@
 											id="email"
 											name="email"
 											type="email"
-											placeholder="Register to get more information"
+											placeholder="Enter your email"
 											class="block w-full rounded-md border-0 px-4 py-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900"
 										/>
 									</div>
