@@ -24,6 +24,15 @@ const tables = [
 			{ name: 'expires_at', type: 'datetime' },
 			{ name: 'kind', type: 'string' }
 		]
+	},
+	{
+		name: 'schedule',
+		columns: [
+			{ name: 'title', type: 'string' },
+			{ name: 'description', type: 'string' },
+			{ name: 'date', type: 'datetime' },
+			{ name: 'duration', type: 'datetime' }
+		]
 	}
 ] as const;
 
@@ -36,9 +45,13 @@ export type UserRecord = User & XataRecord;
 export type OneTimePassword = InferredTypes['one_time_password'];
 export type OneTimePasswordRecord = OneTimePassword & XataRecord;
 
+export type Schedule = InferredTypes['schedule'];
+export type ScheduleRecord = Schedule & XataRecord;
+
 export type DatabaseSchema = {
 	user: UserRecord;
 	one_time_password: OneTimePasswordRecord;
+	schedule: ScheduleRecord;
 };
 
 const DatabaseClient = buildClient();
