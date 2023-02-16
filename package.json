@@ -41,6 +41,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@xata.io/client": "^0.22.1"
+		"@xata.io/client": "^0.22.1",
+		"date-fns": "^2.29.3"
 	}
 }
