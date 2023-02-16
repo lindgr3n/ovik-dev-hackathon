@@ -1,14 +1,35 @@
 <script lang="ts">
-	export let data: Array<EventItem> = [];
+	import type { ScheduleRecord } from '$lib/server/xata';
+	import { format, subHours } from 'date-fns';
 
-	console.log(data);
+	export let data: Array<ScheduleRecord> = [];
 
-	function getGridRowStart(item: EventItem) {
-		return 2 + item.date.getHours() * 12 + (item.date.getMinutes() / 60) * 12;
+	// Start on row 2 and 12 span for every hour
+	// HOUR:MINUTE => [row_start] + (HOURE - [START_TIME]) * 12 + (MINUTE / 60 * 12)
+	// 06:00 => 2 + (12*6-6) => grid-row
+	// 06:30 => 2 + (12*6-6) + (30/60*12) => 6 grid-row
+	// duration 07:00 - 06:00 => 3600000 ms /1000 => 3600 s /60 => 60 min /60 => 1 * 12 => 12 span
+	// 22:30 => 2 + (14*12)
+
+	function getGridRowStart(item: ScheduleRecord) {
+		if (!item.date) {
+			return;
+		}
+		return (
+			2 +
+			(subHours(item.date, 2).getHours() - 6) * 12 +
+			(subHours(item.date, 2).getMinutes() / 60) * 12
+		);
 	}
 
-	function getGridRowSpan(item: EventItem) {
-		return ((item.duration.getTime() - item.date.getTime()) / 1000 / 60 / 60) * 12;
+	function getGridRowSpan(item: ScheduleRecord) {
+		if (!item.date || !item.duration) {
+			return;
+		}
+		return (
+			((subHours(item.duration, 2).getTime() - subHours(item.date, 2).getTime()) / 1000 / 60 / 60) *
+			12
+		);
 	}
 </script>
 
@@ -23,42 +44,7 @@
 					style="grid-template-rows: repeat(48, minmax(3.5rem, 1fr))"
 				>
 					<div class="row-end-1 h-7" />
-					<div>
-						<div class="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-							00:00
-						</div>
-					</div>
-					<div />
-					<div>
-						<div class="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-							01:00
-						</div>
-					</div>
-					<div />
-					<div>
-						<div class="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-							02:00
-						</div>
-					</div>
-					<div />
-					<div>
-						<div class="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-							03:00
-						</div>
-					</div>
-					<div />
-					<div>
-						<div class="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-							04:00
-						</div>
-					</div>
-					<div />
-					<div>
-						<div class="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
-							05:00
-						</div>
-					</div>
-					<div />
+
 					<div>
 						<div class="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
 							06:00
@@ -167,13 +153,13 @@
 						</div>
 					</div>
 					<div />
+					<div>
+						<div class="-mt-2.5 -ml-14 w-14 pr-2 text-right text-xs leading-5 text-gray-400">
+							00:00
+						</div>
+					</div>
 				</div>
 
-				<!-- Events -->
-				<!-- Start on row 2 and 12 span for every hour -->
-				<!-- 06:00 => 2 + (12*6) => grid-row -->
-				<!-- 06:30 => 2 + (12*6) => grid-row -->
-				<!-- duration 07:00 - 06:00 => 3600000 ms /1000 => 3600 s /60 => 60 min /60 => 1 * 12 => 12 span-->
 				<ol
 					class="col-start-1 col-end-2 row-start-1 grid grid-cols-1"
 					style="grid-template-rows: 1.75rem repeat(288, minmax(0, 1fr)) auto"
@@ -183,20 +169,19 @@
 							class="relative mt-px flex"
 							style={`grid-row: ${getGridRowStart(item)} / span ${getGridRowSpan(item)}`}
 						>
-							<a
-								href="#"
+							<div
 								class="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-blue-50 p-2 text-xs leading-5 hover:bg-blue-100"
 							>
 								<p class="order-1 font-semibold text-blue-700">{item.title}</p>
 								<p class="order-1 text-blue-500 group-hover:text-blue-700">
-									{item.description}
+									{item.description ?? ''}
 								</p>
 								<p class="text-blue-500 group-hover:text-blue-700">
-									<time datetime={item.date.toLocaleString()}
-										>{item.date.toLocaleTimeString().substring(0, 5)}</time
+									<time datetime={item.date ? item.date.toLocaleString() : ''}
+										>{item.date ? format(subHours(item.date, 2), 'kk:mm') : ''}</time
 									>
 								</p>
-							</a>
+							</div>
 						</li>
 					{/each}
 					<!-- <li class="relative mt-px flex" style="grid-row: 92 / span 30">
