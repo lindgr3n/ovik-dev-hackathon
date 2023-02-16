@@ -2,6 +2,21 @@
 	import Calender from '$lib/components/molecules/Calender.svelte';
 
 	let selected: 'friday' | 'saturday' | 'sunday' = 'friday';
+
+	const data: Array<EventItem> = [
+		{
+			title: 'Beakfast',
+			description: '',
+			date: new Date('2023-05-10 09:00:00'),
+			duration: new Date('2023-05-10 10:00:00')
+		},
+		{
+			title: 'Another thing',
+			description: 'With some description',
+			date: new Date('2023-05-10 14:30:00'),
+			duration: new Date('2023-05-10 15:00:00')
+		}
+	];
 </script>
 
 <div class="flex h-full flex-col">
@@ -85,5 +100,5 @@
 		</div>
 	</div>
 
-	<Calender />
+	<Calender {data} />
 </div>

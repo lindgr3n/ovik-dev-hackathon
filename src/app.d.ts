@@ -12,6 +12,13 @@ declare global {
 		// interface PageData {}
 		// interface Platform {}
 	}
+
+	interface EventItem {
+		title: string;
+		description?: string;
+		date: Date;
+		duration: Date;
+	}
 }
 
 export {};

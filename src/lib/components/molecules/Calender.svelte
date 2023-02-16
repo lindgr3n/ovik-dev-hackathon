@@ -1,4 +1,16 @@
-<script lang="ts"></script>
+<script lang="ts">
+	export let data: Array<EventItem> = [];
+
+	console.log(data);
+
+	function getGridRowStart(item: EventItem) {
+		return 2 + item.date.getHours() * 12 + (item.date.getMinutes() / 60) * 12;
+	}
+
+	function getGridRowSpan(item: EventItem) {
+		return ((item.duration.getTime() - item.date.getTime()) / 1000 / 60 / 60) * 12;
+	}
+</script>
 
 <div class="isolate flex flex-auto overflow-hidden bg-white">
 	<div class="flex flex-auto flex-col overflow-auto">
@@ -158,23 +170,36 @@
 				</div>
 
 				<!-- Events -->
-				<!-- 6 span for every hour -->
+				<!-- Start on row 2 and 12 span for every hour -->
+				<!-- 06:00 => 2 + (12*6) => grid-row -->
+				<!-- 06:30 => 2 + (12*6) => grid-row -->
+				<!-- duration 07:00 - 06:00 => 3600000 ms /1000 => 3600 s /60 => 60 min /60 => 1 * 12 => 12 span-->
 				<ol
 					class="col-start-1 col-end-2 row-start-1 grid grid-cols-1"
 					style="grid-template-rows: 1.75rem repeat(288, minmax(0, 1fr)) auto"
 				>
-					<!-- <li class="relative mt-px flex" style="grid-row: 6 / span 6">
-						<a
-							href="#"
-							class="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-blue-50 p-2 text-xs leading-5 hover:bg-blue-100"
+					{#each data as item}
+						<li
+							class="relative mt-px flex"
+							style={`grid-row: ${getGridRowStart(item)} / span ${getGridRowSpan(item)}`}
 						>
-							<p class="order-1 font-semibold text-blue-700">Breakfast</p>
-							<p class="text-blue-500 group-hover:text-blue-700">
-								<time datetime="2022-01-22T06:00">6:00 AM</time>
-							</p>
-						</a>
-					</li>
-					<li class="relative mt-px flex" style="grid-row: 92 / span 30">
+							<a
+								href="#"
+								class="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-blue-50 p-2 text-xs leading-5 hover:bg-blue-100"
+							>
+								<p class="order-1 font-semibold text-blue-700">{item.title}</p>
+								<p class="order-1 text-blue-500 group-hover:text-blue-700">
+									{item.description}
+								</p>
+								<p class="text-blue-500 group-hover:text-blue-700">
+									<time datetime={item.date.toLocaleString()}
+										>{item.date.toLocaleTimeString().substring(0, 5)}</time
+									>
+								</p>
+							</a>
+						</li>
+					{/each}
+					<!-- <li class="relative mt-px flex" style="grid-row: 92 / span 30">
 						<a
 							href="#"
 							class="group absolute inset-1 flex flex-col overflow-y-auto rounded-lg bg-pink-50 p-2 text-xs leading-5 hover:bg-pink-100"
