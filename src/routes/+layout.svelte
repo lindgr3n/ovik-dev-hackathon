@@ -21,6 +21,10 @@
 		// 	href: '/entrys'
 		// },
 		{
+			name: 'Challanges',
+			href: '/challanges'
+		},
+		{
 			name: 'Sponsors',
 			href: '/sponsors'
 		}
