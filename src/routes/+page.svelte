@@ -1,4 +1,5 @@
 <script lang="ts">
+	import HighlightText from '$lib/components/molecules/HighlightText.svelte';
 	import Notification from '$lib/components/molecules/Notification.svelte';
 	import {
 		ChatIcon,
@@ -186,9 +187,7 @@
 		<div class="mx-auto max-w-md px-6 text-center sm:max-w-3xl lg:max-w-7xl lg:px-8">
 			<h2 class="text-lg font-semibold text-cyan-600">What we stand for</h2>
 			<p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-				An enviroment where <span class="highlight-container"
-					><span class="highlight">everyone</span></span
-				> is included
+				An enviroment where <HighlightText>everyone</HighlightText> is included
 			</p>
 			<p class="mx-auto mt-5 max-w-prose text-xl text-gray-500">
 				We want everyone to feel included and free to speak there mind with the same goal of
@@ -402,29 +401,3 @@
 		</div>
 	</div>
 </footer>
-
-<style>
-	/* Could do this the tailwind way https://tailwindcss.com/docs/hover-focus-and-other-states#pseudo-elements */
-	.highlight-container,
-	.highlight {
-		position: relative;
-	}
-	.highlight-container {
-		display: inline-block;
-	}
-	.highlight-container:before {
-		content: ' ';
-		display: block;
-		height: 100%;
-		width: 100%;
-		margin-left: -3px;
-		margin-right: -3px;
-		position: absolute;
-		background: #ffd500;
-		transform: rotate(2deg);
-		top: -1px;
-		left: -1px;
-		border-radius: 20% 25% 20% 24%;
-		padding: 10px 3px 3px 10px;
-	}
-</style>
