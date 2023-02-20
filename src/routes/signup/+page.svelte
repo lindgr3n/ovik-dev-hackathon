@@ -88,8 +88,12 @@
 							id="first-name"
 							autocomplete="given-name"
 							class="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+							value={form?.first_name ?? ''}
 							required
 						/>
+						{#if form?.first_name_missing}<p class="text-red-500">
+								The first name field is required!
+							</p>{/if}
 					</div>
 				</div>
 				<div>
@@ -101,8 +105,12 @@
 							id="last-name"
 							autocomplete="family-name"
 							class="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+							value={form?.last_name ?? ''}
 							required
 						/>
+						{#if form?.last_name_missing}<p class="text-red-500">
+								The last name field is required!
+							</p>{/if}
 					</div>
 				</div>
 				<div class="sm:col-span-2">
@@ -114,12 +122,17 @@
 							id="role"
 							name="role"
 							class="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+							value={form?.role ?? ''}
 							required
 						>
 							{#each data.roles as role}
 								<option value={role.value}>{role.name}</option>
 							{/each}
 						</select>
+						{#if form?.role_missing}<p class="text-red-500">The role field is required!</p>{/if}
+						{#if form?.role_incorrect}<p class="text-red-500">
+								The role field provided was not valid!
+							</p>{/if}
 					</div>
 				</div>
 				<div class="sm:col-span-2">
@@ -131,8 +144,10 @@
 							type="email"
 							autocomplete="email"
 							class="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-							required
+							value={form?.email ?? ''}
 						/>
+						{#if form?.email_missing}<p class="text-red-500">The email field is required!</p>{/if}
+						{#if form?.email_exist}<p class="text-red-500">The email is already taken!</p>{/if}
 					</div>
 				</div>
 

@@ -41,16 +41,22 @@ export const actions: Actions = {
 		const email = data.get('email')?.toString();
 		const role = data.get('role')?.toString() ?? '';
 
+		if (!first_name) {
+			return fail(400, { email, first_name, last_name, role, first_name_missing: true });
+		}
+		if (!last_name) {
+			return fail(400, { email, first_name, last_name, role, last_name_missing: true });
+		}
 		if (!email) {
-			return fail(400, { email: 'missing' });
+			return fail(400, { email, first_name, last_name, role, email_missing: true });
 		}
 		if (!role) {
-			return fail(400, { role: 'missing' });
-		}
-		if (!isUserRole(role)) {
-			return fail(400, { role: 'icorrect' });
+			return fail(400, { email, first_name, last_name, role, role_missing: true });
 		}
 
+		if (!isUserRole(role)) {
+			return fail(400, { email, first_name, last_name, role, role_incorrect: true });
+		}
 		try {
 			const user = await createUser({
 				first_name: first_name,
@@ -76,7 +82,7 @@ export const actions: Actions = {
 		} catch (e: unknown) {
 			if (e instanceof FetcherError) {
 				e.errors?.find((e) => e.message?.includes('[email]: is not unique'));
-				return fail(400, { email: 'user already exist' });
+				return fail(400, { email, first_name, last_name, role, email_exist: true });
 			}
 			console.log('Create user failed', error);
 			throw error(500, { message: 'Failed to create a user' });
