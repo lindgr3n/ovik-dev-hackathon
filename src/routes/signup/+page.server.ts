@@ -73,14 +73,17 @@ export const actions: Actions = {
 					}
 				}
 			]);
-		} catch (error: unknown) {
-			if (error instanceof FetcherError) {
-				error.errors?.find((e) => e.message?.includes('[email]: is not unique'));
+		} catch (e: unknown) {
+			if (e instanceof FetcherError) {
+				e.errors?.find((e) => e.message?.includes('[email]: is not unique'));
 				return fail(400, { email: 'user already exist' });
 			}
 			console.log('Create user failed', error);
+			throw error(500, { message: 'Failed to create a user' });
 		}
 
-		return {};
+		return {
+			success: true
+		};
 	}
 };

@@ -1,8 +1,26 @@
 <script lang="ts">
-	import type { PageData } from './$types';
+	import Notification from '$lib/components/molecules/Notification.svelte';
+	import type { ActionData, PageData } from './$types';
 
 	export let data: PageData;
+	export let form: ActionData;
+
+	let showModalSuccess = form?.success;
+
+	$: {
+		if (showModalSuccess) {
+			setInterval(() => (showModalSuccess = false), 8000);
+		}
+	}
 </script>
+
+{#if showModalSuccess}
+	<Notification
+		title="You are in 🙌"
+		message="Thanks for signing up and taking a part in this event! Stay tuned for more information in your inbox 📫"
+		on:close={() => (showModalSuccess = false)}
+	/>
+{/if}
 
 <div class="overflow-hidden bg-white py-16 px-6 lg:px-8 lg:py-24">
 	<div class="relative mx-auto max-w-xl">
