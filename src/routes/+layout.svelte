@@ -32,7 +32,7 @@
 
 	onMount(() => {
 		Fathom.load('KDNOUWNY', {
-			includedDomains: ['ovik-dev-hackathon.netlify.app'],
+			includedDomains: ['ovik-dev-hackathon.netlify.app', 'ovik-dev-hackathon.vercel.app'],
 			excludedDomains: ['localhost']
 		});
 	});
