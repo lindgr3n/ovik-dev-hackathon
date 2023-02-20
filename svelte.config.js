@@ -1,5 +1,6 @@
 import preprocess from 'svelte-preprocess';
-import adapter from '@sveltejs/adapter-netlify';
+import adapterNetlify from '@sveltejs/adapter-netlify';
+import adapterVercel from '@sveltejs/adapter-vercel';
 import { vitePreprocess } from '@sveltejs/kit/vite';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -14,7 +15,7 @@ const config = {
 	],
 
 	kit: {
-		adapter: adapter()
+		adapter: process.env.DEPLOY_ADAPTER === 'vercel' ? adapterVercel() : adapterNetlify()
 	}
 };
 
