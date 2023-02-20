@@ -122,7 +122,7 @@
 							id="role"
 							name="role"
 							class="block w-full rounded-md border-gray-300 py-3 px-4 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-							value={form?.role ?? ''}
+							value={form?.role ?? data.roles[0].value}
 							required
 						>
 							{#each data.roles as role}
