@@ -1,4 +1,5 @@
 <script lang="ts">
+	import Notification from '$lib/components/molecules/Notification.svelte';
 	import {
 		ChatIcon,
 		ThumbUpIcon,
@@ -7,6 +8,7 @@
 		MusicNoteIcon
 	} from '@rgossiaux/svelte-heroicons/outline';
 	import { fade } from 'svelte/transition';
+	import type { ActionData } from './$types';
 
 	const manifesto = [
 		{
@@ -74,8 +76,17 @@
 		'build a better future through technology.'
 	];
 
+	export let form: ActionData;
+
 	let futureWordIndex = 0;
 	let futureWord = futureWords[futureWordIndex];
+	let showModalSuccess = form?.success;
+
+	$: {
+		if (showModalSuccess) {
+			setInterval(() => (showModalSuccess = false), 5000);
+		}
+	}
 	setInterval(() => {
 		if (futureWordIndex > futureWords.length - 1) {
 			futureWordIndex = 0;
@@ -87,6 +98,13 @@
 	}, 5500);
 </script>
 
+{#if showModalSuccess}
+	<Notification
+		title="Subscribed 🙌"
+		message="Thanks for being in the loop! Stay tuned for more information in your inbox 📫"
+		on:close={() => (showModalSuccess = false)}
+	/>
+{/if}
 <main>
 	<section class="bg-gray-900 px-4 pt-10 sm:pt-16 lg:overflow-hidden lg:pt-8 lg:pb-14">
 		<div class="mx-auto max-w-7xl lg:px-8">
@@ -128,9 +146,11 @@
 											id="email"
 											name="email"
 											type="email"
+											required
 											placeholder="Enter your email"
 											class="block w-full rounded-md border-0 px-4 py-3 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-gray-900"
 										/>
+										{#if form?.email}<p class="text-red-500">The email field is required!</p>{/if}
 									</div>
 									<div class="mt-3 sm:mt-0 sm:ml-3">
 										<button

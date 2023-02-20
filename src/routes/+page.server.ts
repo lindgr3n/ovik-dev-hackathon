@@ -35,6 +35,6 @@ export const actions: Actions = {
 			}
 		]);
 
-		return {};
+		return { success: true };
 	}
 };
